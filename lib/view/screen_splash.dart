@@ -10,18 +10,19 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  double opacity = 1.0;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(seconds: 3)).then((_){
-       Navigator.pushReplacement(
-      // ignore: use_build_context_synchronously
-      context,
-      MaterialPageRoute(builder: (context) => GetStartedScreen()),
-    );
+    
+    Future.delayed(Duration(seconds: 3)).then((_) {
+      Navigator.pushReplacement(
+        // ignore: use_build_context_synchronously
+        context,
+        MaterialPageRoute(builder: (context) => GetStartedScreen()),
+      );
     });
-   
   }
 
   @override
