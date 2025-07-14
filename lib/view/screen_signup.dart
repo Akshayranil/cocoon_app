@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SignInScreen extends StatelessWidget {
   final TextEditingController emailcontroller = TextEditingController();
   final TextEditingController passwordcontroller = TextEditingController();
+  final TextEditingController namecontroller = TextEditingController();
   SignInScreen({super.key});
 
   @override
@@ -29,7 +30,7 @@ class SignInScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(20),
                     child: TextField(
-                      controller: emailcontroller,
+                      controller: namecontroller,
                       decoration:  InputDecoration(labelText: "Username",border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)
                       ),

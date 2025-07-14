@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "711927377956",
-    "project_id": "cocoonbooking",
-    "storage_bucket": "cocoonbooking.firebasestorage.app"
+    "project_number": "607718997747",
+    "project_id": "cocoon-booking",
+    "storage_bucket": "cocoon-booking.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:711927377956:android:0dd4ce5b4e6cf8ee4c68b1",
+        "mobilesdk_app_id": "1:607718997747:android:716b8656946a874167c186",
         "android_client_info": {
           "package_name": "com.akshay.hotelbooking"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA0AKEbkYqlJb4Acrwi5ge44jz2FPZbV80"
+          "current_key": "AIzaSyCK2w-YvDvBOLSTCRwLcroc12Ro_vuaVNU"
         }
       ],
       "services": {

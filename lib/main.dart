@@ -1,4 +1,6 @@
 import 'package:cocoon_app/controller/bloc/auth/auth_bloc.dart';
+import 'package:cocoon_app/controller/bloc/hotelbloc/fetchhotel_bloc.dart';
+import 'package:cocoon_app/controller/bloc/hotelbloc/fetchhotel_event.dart';
 import 'package:cocoon_app/view/screen_splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(create: (_)=>AuthBloc()),
+        BlocProvider<HotelBloc>(create: (_)=>HotelBloc()..add(FetchHotels()))
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

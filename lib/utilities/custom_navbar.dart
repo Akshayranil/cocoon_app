@@ -21,8 +21,8 @@ class BottomNavBar extends StatelessWidget {
           ),
           Tab(icon: Icon(Icons.bookmark_added_sharp),
           text: "Booked",),
-          Tab(icon: Icon(Icons.favorite),),
-          Tab(icon: Icon(Icons.person),)
+          Tab(icon: Icon(Icons.favorite),text: "Saved",),
+          Tab(icon: Icon(Icons.person),text: "Profile",)
         ],
         indicatorColor: Colors.transparent,
         labelColor: AppColor.secondary,
