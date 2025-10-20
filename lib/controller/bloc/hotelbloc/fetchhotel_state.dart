@@ -17,3 +17,9 @@ class HotelError extends HotelState {
 
   HotelError(this.message);
 }
+
+class HotelSelected extends HotelState {
+  final Hotel  hotel;
+
+  HotelSelected(this.hotel);
+}

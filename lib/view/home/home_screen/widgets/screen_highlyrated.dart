@@ -1,13 +1,19 @@
+import 'package:cocoon_app/controller/bloc/hotelbloc/fetchhotel_bloc.dart';
+import 'package:cocoon_app/controller/bloc/hotelbloc/fetchhotel_event.dart';
+import 'package:cocoon_app/model/hotelmodel.dart';
+import 'package:cocoon_app/view/home/hotel_detail_screen/hotel_detail_main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HotelListTile extends StatelessWidget {
   final String imageUrl;
   final String name;
   final String location;
-  final double rating;
-  final double price;
-  final bool isLiked;
+  final String rating;
+  final String price;
+  final bool isFavorite;
   final VoidCallback onLikeToggle;
+  final Hotel hotel;
 
   const HotelListTile({
     super.key,
@@ -16,8 +22,9 @@ class HotelListTile extends StatelessWidget {
     required this.location,
     required this.rating,
     required this.price,
-    required this.isLiked,
+    required this.isFavorite,
     required this.onLikeToggle,
+    required this.hotel,
   });
 
   @override
@@ -33,22 +40,34 @@ class HotelListTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Image
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                imageUrl,
-                width: 120,
-                height: 120,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => Container(
-                  width: 100,
-                  height: 100,
-                  color: Colors.grey[300],
-                  child: const Icon(Icons.broken_image),
+            GestureDetector(
+              onTap: () {
+                context.read<HotelBloc>().add(SelectHotel(hotel));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HotelDetailScreen()),
+                );
+                // context.read<HotelBloc>().add(FetchHotels());
+              },
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.network(
+                  imageUrl.isNotEmpty
+                      ? imageUrl
+                      : 'https://via.placeholder.com/120',
+                  width: 120,
+                  height: 120,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => Container(
+                    width: 100,
+                    height: 100,
+                    color: Colors.grey[300],
+                    child: const Icon(Icons.broken_image),
+                  ),
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 30),
 
             // Hotel info
             Expanded(
@@ -63,10 +82,7 @@ class HotelListTile extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Text(
-                    location,
-                    style: const TextStyle(fontSize: 13),
-                  ),
+                  Text(location, style: const TextStyle(fontSize: 13)),
                   const Spacer(),
                   Row(
                     children: [
@@ -78,10 +94,8 @@ class HotelListTile extends StatelessWidget {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        '₹${price.toStringAsFixed(0)}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                        ),
+                        '₹${price.toString()}',
+                        style: const TextStyle(fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -89,11 +103,10 @@ class HotelListTile extends StatelessWidget {
               ),
             ),
 
-            // Like Icon
             IconButton(
               icon: Icon(
-                isLiked ? Icons.favorite : Icons.favorite_border,
-                color: isLiked ? Colors.red : Colors.grey,
+                isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: isFavorite ? Colors.green : Colors.grey,
               ),
               onPressed: onLikeToggle,
             ),

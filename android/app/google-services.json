@@ -7,12 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:607718997747:android:716b8656946a874167c186",
+        "mobilesdk_app_id": "1:607718997747:android:36e2e6b7c2a43f3067c186",
         "android_client_info": {
-          "package_name": "com.akshay.hotelbooking"
+          "package_name": "com.akshay.cocoon_hotelside"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "607718997747-se8gnsp6nnk2oa89p6101df0vdf7umtp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCK2w-YvDvBOLSTCRwLcroc12Ro_vuaVNU"
@@ -20,7 +25,49 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607718997747-se8gnsp6nnk2oa89p6101df0vdf7umtp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607718997747:android:716b8656946a874167c186",
+        "android_client_info": {
+          "package_name": "com.akshay.hotelbooking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607718997747-4stp4p1bbarjb4se0uvrrtl558knikan.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.akshay.hotelbooking",
+            "certificate_hash": "0996042b3608afa5f3318a4b206ba2217f673f9e"
+          }
+        },
+        {
+          "client_id": "607718997747-se8gnsp6nnk2oa89p6101df0vdf7umtp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK2w-YvDvBOLSTCRwLcroc12Ro_vuaVNU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607718997747-se8gnsp6nnk2oa89p6101df0vdf7umtp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
