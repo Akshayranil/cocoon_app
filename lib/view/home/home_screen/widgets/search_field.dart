@@ -1,5 +1,6 @@
 import 'package:cocoon_app/controller/bloc/hotelbloc/fetchhotel_bloc.dart';
 import 'package:cocoon_app/controller/bloc/hotelbloc/fetchhotel_event.dart';
+import 'package:cocoon_app/view/home/home_screen/widgets/filter_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,11 +43,11 @@ class SearchField extends StatelessWidget {
              SizedBox(width: 10,),
              InkWell(
                 onTap: () {
-                  // TODO: open your filter dialog/screen
-                  // showModalBottomSheet(
-                  //   context: context,
-                  //   builder: (context) => const FilterOptionsSheet(),
-                  // );
+                  
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => const FilterOptionsSheet(),
+                  );
                 },
                 borderRadius: BorderRadius.circular(10),
                 child: Container(

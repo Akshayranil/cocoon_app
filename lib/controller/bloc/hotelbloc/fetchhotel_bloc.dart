@@ -40,5 +40,38 @@ class HotelBloc extends Bloc<HotelEvent, HotelState> {
     on<SelectHotel>((event, emit) {
       selectedHotel = event.hotel;
     });
+
+on<FilterHotelsByPrice>((event, emit) {
+  if (allHotels.isNotEmpty) {
+    final filteredHotels = allHotels.where((hotel) {
+      final price = int.tryParse(hotel.price.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
+
+      switch (event.priceRange) {
+        case 'Below 1000':
+          return price < 1000;
+        case '1000 - 2000':
+          return price >= 1000 && price <= 2000;
+        case '2000 - 3000':
+          return price > 2000 && price <= 3000;
+        case 'Above 3000':
+          return price > 3000;
+        default:
+          return true;
+      }
+    }).toList();
+
+    emit(HotelLoaded(filteredHotels));
+  }
+});
+
+on<FilterHotelsByResidencyType>((event, emit) async {
+  final filteredHotels = allHotels
+      .where((hotel) => hotel.type == event.residencyType)
+      .toList();
+
+  emit(HotelLoaded(filteredHotels));
+});
+
+
   }
 }

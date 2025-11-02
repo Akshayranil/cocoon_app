@@ -13,3 +13,5 @@ class RemoveFromFavorites extends FavoritesEvent {
 
   RemoveFromFavorites(this.hotel);
 }
+
+class LoadFavorites extends FavoritesEvent {}

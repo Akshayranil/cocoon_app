@@ -1,6 +1,6 @@
+import 'package:cocoon_app/model/hotelmodel.dart';
 import 'package:cocoon_app/model/room_model.dart';
 import 'package:equatable/equatable.dart';
-
 
 abstract class RoomState extends Equatable {
   @override
@@ -29,6 +29,6 @@ class RoomError extends RoomState {
 
 class RoomSelected extends RoomState {
   final Room room;
-  RoomSelected(this.room);
+  final Hotel hotel;
+  RoomSelected(this.room,this.hotel);
 }
-

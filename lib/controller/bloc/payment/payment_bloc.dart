@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cocoon_app/model/booked_room_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -52,8 +53,15 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
     }
   }
 
-  void onPaymentSuccess(PaymentSuccess event, Emitter<PaymentState> emit) {
+  void onPaymentSuccess(PaymentSuccess event, Emitter<PaymentState> emit)async {
     emit(PaymentSuccessState(event.response.paymentId ?? ''));
+      await FirebaseFirestore.instance.collection('payments').add({
+    'paymentId': event.response.paymentId,
+    'amount': selectedRoom?.price ?? 0,
+    'hotelName': selectedRoom?.hotelName,
+    'userId': selectedRoom?.userId,
+    'timestamp': FieldValue.serverTimestamp(),
+  });
   }
 
   void onPaymentError(PaymentError event, Emitter<PaymentState> emit) {

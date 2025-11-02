@@ -43,7 +43,7 @@ class HotelListScreen extends StatelessWidget {
                   itemCount: hotels.length,
                   itemBuilder: (context, index) {
                     final hotel = hotels[index];
-                    final isFavorite = favoriteHotels.contains(hotel);
+                    final isFavorite = favoriteHotels.any((fav) => fav.id == hotel.id);
                     return Container(
                       margin: const EdgeInsets.only(bottom: 16),
                       height: 260,
@@ -56,10 +56,10 @@ class HotelListScreen extends StatelessWidget {
                             GestureDetector(
                               onTap: () {
                                 context.read<HotelBloc>().add(SelectHotel(hotel));
-                                Navigator.pushReplacement(
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => HotelDetailScreen(),
+                                    builder: (context) => HotelDetailScreen(hotelId: hotel.id,),
                                   ),
                                 );
                               },
@@ -176,8 +176,8 @@ class HotelListScreen extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            // '₹${hotel.price.toStringAsFixed(0)}',
-                                            "₹ 39,000",
+                                            '₹${hotel.price}',
+                                           
                                             style: const TextStyle(
                                               color: Colors.white,
                                             ),

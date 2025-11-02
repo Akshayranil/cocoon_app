@@ -94,9 +94,9 @@ class AvailableRoomsSection extends StatelessWidget {
                                 GestureDetector(
                                   onTap: () {
                                     context.read<RoomBloc>().add(
-                                      SelectRoom(room),
+                                      SelectRoom(room,hotel),
                                     );
-                                    Navigator.pushReplacement(
+                                    Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>

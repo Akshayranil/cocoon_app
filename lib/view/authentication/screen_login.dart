@@ -4,6 +4,7 @@ import 'package:cocoon_app/utilities/custom_navbar.dart';
 import 'package:cocoon_app/utilities/forgot_password.dart';
 import 'package:cocoon_app/view/home/home_screen/screen_home_main.dart';
 import 'package:cocoon_app/view/authentication/screen_signup.dart';
+import 'package:cocoon_app/view/profile_setup/screen_profile_set_up.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -272,7 +273,7 @@ class LoginScreen extends StatelessWidget {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => BottomNavBar(),
+                                builder: (context) => ProfileSetupScreen(),
                               ),
                             );
                           }
@@ -289,7 +290,7 @@ class LoginScreen extends StatelessWidget {
           if (state is AuthSuccess) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => BottomNavBar()),
+              MaterialPageRoute(builder: (context) => ProfileSetupScreen()),
             );
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(

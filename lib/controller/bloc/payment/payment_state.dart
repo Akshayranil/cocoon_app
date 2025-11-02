@@ -4,7 +4,9 @@ abstract class PaymentState {}
 
 class PaymentInitial extends PaymentState {}
 
-class PaymentInProgress extends PaymentState {}
+class PaymentInProgress extends PaymentState {
+  
+}
 
 class PaymentSuccessState extends PaymentState {
   final String paymentId;

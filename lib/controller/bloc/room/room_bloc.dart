@@ -88,7 +88,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
     });
 
     on<SelectRoom>((event, emit) {
-      emit(RoomSelected(event.selectedRoom));
+      emit(RoomSelected(event.selectedRoom,event.hotel));
     });
   }
 }

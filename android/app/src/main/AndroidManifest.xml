@@ -6,6 +6,8 @@
         android:label="cocoon_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+         <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyAFwDB43i5fKYbvV2G5vxePUFU_UTPQC8o"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

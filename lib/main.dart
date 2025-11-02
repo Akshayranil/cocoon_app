@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cocoon_app/controller/bloc/auth/auth_bloc.dart';
 import 'package:cocoon_app/controller/bloc/booking/booking_bloc.dart';
 import 'package:cocoon_app/controller/bloc/favorites/favorites_bloc.dart';
 import 'package:cocoon_app/controller/bloc/hotelbloc/fetchhotel_bloc.dart';
 import 'package:cocoon_app/controller/bloc/hotelbloc/fetchhotel_event.dart';
 import 'package:cocoon_app/controller/bloc/payment/payment_bloc.dart';
+import 'package:cocoon_app/controller/bloc/profile/profile_bloc.dart';
+import 'package:cocoon_app/controller/bloc/review/review_bloc.dart';
 import 'package:cocoon_app/controller/bloc/room/room_bloc.dart';
 import 'package:cocoon_app/firebase_options.dart';
 import 'package:cocoon_app/view/onboarding_screen/screen_check_user_logedin.dart';
@@ -29,10 +32,12 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(create: (_)=>AuthBloc()),
         BlocProvider<HotelBloc>(create: (_)=>HotelBloc()..add(FetchHotels())),
-        BlocProvider<FavoritesBloc>(create: (_)=>FavoritesBloc()),
+        BlocProvider<FavoritesBloc>(create: (_)=>FavoritesBloc()..add(LoadFavorites())),
         BlocProvider<PaymentBloc>(create: (_)=>PaymentBloc()..add(InitializePayment())),
         BlocProvider<RoomBloc>(create: (_)=>RoomBloc()),
-        BlocProvider<BookingBloc>(create: (_)=>BookingBloc())
+        BlocProvider<BookingBloc>(create: (_)=>BookingBloc()),
+        BlocProvider<ProfileBloc>(create: (_)=>ProfileBloc()),
+        BlocProvider<ReviewBloc>(create: (_)=>ReviewBloc(firestore: FirebaseFirestore.instance))
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

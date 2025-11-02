@@ -1,5 +1,6 @@
 import 'package:cocoon_app/controller/bloc/booking/booking_bloc.dart';
 import 'package:cocoon_app/utilities/custom_navbar.dart';
+import 'package:cocoon_app/view/booking_screen/booking_addto_firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -68,14 +69,19 @@ class PaymentSuccessScreen extends StatelessWidget {
                       vertical: 14,
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BottomNavBar(tabindex: 1),
-                      ),
-                    );
-                  },
+                  onPressed: () async {
+  if (bookedRoom != null) {
+    await saveBookingToHotel(context);
+    await saveBookingToUser(bookedRoom);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BottomNavBar(tabindex: 1),
+      ),
+    );
+  }
+},
+
                   child: const Text('See Details'),
                 ),
               ],

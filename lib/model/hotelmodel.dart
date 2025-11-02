@@ -82,7 +82,7 @@ class Hotel {
           : null,
       hotelimages: List<String>.from(map['hotelimages'] ),
       rating: (map['rating']?? '4.5'),
-      price: (map['price']??'39,500')
+      price: (map['price']?.toString()??'1600')
     );
   }
 

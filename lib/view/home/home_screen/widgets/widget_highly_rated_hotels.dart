@@ -12,6 +12,7 @@ class WidgetHighlyRatedHotels extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<FavoritesBloc>().add(LoadFavorites()); 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -42,7 +43,7 @@ class WidgetHighlyRatedHotels extends StatelessWidget {
                     itemCount: hotels.length,
                     itemBuilder: (context, index) {
                       final hotel = hotels[index];
-                      final isFavorite = favoriteHotels.contains(hotel);
+                      final isFavorite = favoriteHotels.any((fav) => fav.id == hotel.id);
 
                       return HotelListTile(
                         hotel: hotel,

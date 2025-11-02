@@ -1,3 +1,4 @@
+import 'package:cocoon_app/model/hotelmodel.dart';
 import 'package:cocoon_app/model/room_model.dart';
 import 'package:equatable/equatable.dart';
 
@@ -17,6 +18,6 @@ class FetchRooms extends RoomEvent {
 
 class SelectRoom extends RoomEvent {
   final Room selectedRoom;
-  SelectRoom(this.selectedRoom);
+  final Hotel hotel;
+  SelectRoom(this.selectedRoom,this.hotel);
 }
-

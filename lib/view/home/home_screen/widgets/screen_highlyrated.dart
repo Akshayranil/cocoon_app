@@ -45,7 +45,8 @@ class HotelListTile extends StatelessWidget {
                 context.read<HotelBloc>().add(SelectHotel(hotel));
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HotelDetailScreen()),
+                  MaterialPageRoute(builder: (context) => HotelDetailScreen(hotelId: hotel.id,)),
+                  
                 );
                 // context.read<HotelBloc>().add(FetchHotels());
               },

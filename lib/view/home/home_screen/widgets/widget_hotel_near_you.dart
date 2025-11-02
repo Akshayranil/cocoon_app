@@ -16,6 +16,7 @@ class WidgetHotelNearYou extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<FavoritesBloc>().add(LoadFavorites());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -71,7 +72,8 @@ class WidgetHotelNearYou extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => HotelDetailScreen(),
+                                    builder: (context) => HotelDetailScreen(hotelId: hotel.id,),
+                                    
                                   ),
                                 );
                               },
@@ -119,9 +121,8 @@ class WidgetHotelNearYou extends StatelessWidget {
                                       favoriteHotels = favState.favoriteHotels;
                                     }
 
-                                    final isFavorite = favoriteHotels.contains(
-                                      hotel,
-                                    );
+                                    final isFavorite = favoriteHotels.any((fav) => fav.id == hotel.id);
+
 
                                     return GestureDetector(
                                       onTap: () {
@@ -198,7 +199,7 @@ class WidgetHotelNearYou extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            '₹ 39,000',
+                                            hotel.price,
                                             style: const TextStyle(
                                               color: Colors.white,
                                             ),
@@ -212,8 +213,8 @@ class WidgetHotelNearYou extends StatelessWidget {
                                               ),
                                               const SizedBox(width: 4),
                                               Text(
-                                                // hotel.rating.toString(),
-                                                '4.5',
+                                                hotel.rating.toString(),
+                                                
                                                 style: const TextStyle(
                                                   color: Colors.white,
                                                 ),

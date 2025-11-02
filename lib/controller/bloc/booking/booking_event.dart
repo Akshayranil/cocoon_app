@@ -12,3 +12,9 @@ class SelectRoom extends BookingEvent {
 
   SelectRoom(this.room);
 }
+
+class FetchUserBookings extends BookingEvent {
+  final String userId;
+  FetchUserBookings(this.userId);
+}
+

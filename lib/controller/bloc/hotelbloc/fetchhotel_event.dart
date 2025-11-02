@@ -15,3 +15,23 @@ class SelectHotel extends HotelEvent {
 
   SelectHotel(this.hotel);
 }
+
+class FilterHotelsByPrice extends HotelEvent {
+  final String priceRange;
+  FilterHotelsByPrice(this.priceRange);
+}
+
+class FilterHotelsByAmenity extends HotelEvent {
+  final String amenity;
+  FilterHotelsByAmenity(this.amenity);
+}
+
+class FilterHotelsByResidencyType extends HotelEvent {
+  final String residencyType;
+  FilterHotelsByResidencyType(this.residencyType);
+}
+
+
+
+
+
