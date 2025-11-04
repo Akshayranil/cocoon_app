@@ -77,9 +77,8 @@ class HotelReviewSection extends StatelessWidget {
                     ),
 
                     const SizedBox(height: 15),
-                    // 📝 Add new review
-                    if (user != null)
-                      AddReviewForm(hotelId: hotelId, user: user),
+                   
+                   
                   ],
                 );
               }
@@ -92,69 +91,5 @@ class HotelReviewSection extends StatelessWidget {
   }
 }
 
-class AddReviewForm extends StatefulWidget {
-  final String hotelId;
-  final User user;
-  const AddReviewForm({super.key, required this.hotelId, required this.user});
 
-  @override
-  State<AddReviewForm> createState() => _AddReviewFormState();
-}
 
-class _AddReviewFormState extends State<AddReviewForm> {
-  final _controller = TextEditingController();
-  double rating = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text("Leave a review:", style: TextStyle(fontWeight: FontWeight.bold)),
-        const SizedBox(height: 8),
-        Row(
-          children: List.generate(5, (index) {
-            return IconButton(
-              icon: Icon(
-                index < rating ? Icons.star : Icons.star_border,
-                color: Colors.amber,
-              ),
-              onPressed: () {
-                setState(() {
-                  rating = index + 1.0;
-                });
-              },
-            );
-          }),
-        ),
-        TextField(
-          controller: _controller,
-          decoration: const InputDecoration(
-            hintText: "Write your comment...",
-            border: OutlineInputBorder(),
-          ),
-        ),
-        const SizedBox(height: 8),
-        ElevatedButton(
-          onPressed: () {
-            final review = HotelReviewModel(
-              id: '',
-              hotelId: widget.hotelId,
-              userId: widget.user.uid,
-              userName: widget.user.displayName ?? 'Anonymous',
-              comment: _controller.text.trim(),
-              rating: rating,
-              createdAt: DateTime.now(),
-            );
-
-            context.read<ReviewBloc>().add(AddReview(review));
-            context.read<ReviewBloc>().add(FetchReviews(widget.hotelId)); // refresh
-            _controller.clear();
-            setState(() => rating = 0);
-          },
-          child: const Text("Submit"),
-        ),
-      ],
-    );
-  }
-}

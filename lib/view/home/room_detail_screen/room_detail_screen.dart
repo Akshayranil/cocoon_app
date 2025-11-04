@@ -12,6 +12,7 @@ import 'package:cocoon_app/controller/bloc/room/room_bloc.dart';
 import 'package:cocoon_app/controller/bloc/room/room_state.dart';
 import 'package:cocoon_app/utilities/custom_color.dart';
 import 'package:cocoon_app/view/home/user_detail_screen/user_detail_main.dart';
+import 'package:intl/intl.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class RoomDetailScreen extends StatelessWidget {
@@ -156,7 +157,8 @@ class RoomDetailScreen extends StatelessWidget {
                                             if (checkIn != null &&
                                                 checkOut != null) {
                                               return Text(
-                                                "${checkIn.day}/${checkIn.month} - ${checkOut.day}/${checkOut.month}",
+                                                "${checkIn.day.toString().padLeft(2,'0')}/${DateFormat('MMM').format(checkIn)} - ${checkOut.day.toString().padLeft(2,'0')}/${DateFormat('MMM').format(checkOut)}",
+
                                                 style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                 ),

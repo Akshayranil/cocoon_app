@@ -39,10 +39,24 @@ class SavedScreen extends StatelessWidget {
             final favoriteHotels = state.favoriteHotels;
 
             if (favoriteHotels.isEmpty) {
-              return const Center(
-                child: Text(
-                  'No favorite hotels yet',
-                  style: TextStyle(fontSize: 18),
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/coccon3-removebg-preview.png', // ✅ Your image path
+                      height: 150,
+                    ),
+                    const SizedBox(height: 12),
+                    const Text(
+                      "You haven't made any favorites yet.",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ],
                 ),
               );
             }

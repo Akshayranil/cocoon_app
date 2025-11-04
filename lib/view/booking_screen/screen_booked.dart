@@ -1,5 +1,9 @@
 import 'package:cocoon_app/controller/bloc/booking/booking_bloc.dart';
 import 'package:cocoon_app/controller/bloc/booking/booking_state.dart';
+import 'package:cocoon_app/utilities/custom_color.dart';
+import 'package:cocoon_app/utilities/custom_navbar.dart';
+import 'package:cocoon_app/view/booking_screen/screen_add_review.dart';
+import 'package:cocoon_app/view/home/home_screen/screen_home_main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +13,7 @@ class BookedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      final user = FirebaseAuth.instance.currentUser;
+    final user = FirebaseAuth.instance.currentUser;
 
     // Fire the event once after build
     if (user != null) {
@@ -17,6 +21,7 @@ class BookedScreen extends StatelessWidget {
         context.read<BookingBloc>().add(FetchUserBookings(user.uid));
       });
     }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Bookings'),
@@ -35,6 +40,17 @@ class BookedScreen extends StatelessWidget {
               itemCount: bookings.length,
               itemBuilder: (context, index) {
                 final room = bookings[index];
+
+                // ✅ Parse custom date format dd/MM/yyyy
+                final parts = room.checkOutDate.split('/'); // ["6","11","2025"]
+                final checkoutDate = DateTime(
+                  int.parse(parts[2]), // year
+                  int.parse(parts[1]), // month
+                  int.parse(parts[0]), // day
+                );
+                final now = DateTime.now();
+                final isStayCompleted = checkoutDate.isBefore(now);
+
                 return Card(
                   elevation: 2,
                   margin: const EdgeInsets.symmetric(vertical: 10),
@@ -69,7 +85,7 @@ class BookedScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
 
-                        // Hotel and location info
+                        // Hotel info
                         Text(
                           '${room.hotelName} • ${room.location}',
                           style: const TextStyle(
@@ -79,7 +95,7 @@ class BookedScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
 
-                        // Price info
+                        // Price
                         Text(
                           'Payment: ₹${room.price.toStringAsFixed(2)}',
                           style: const TextStyle(
@@ -89,7 +105,7 @@ class BookedScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
 
-                        // Check-in/out details
+                        // Check-in/out
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -123,7 +139,7 @@ class BookedScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
 
-                        // Guests info
+                        // Guests
                         Text(
                           'Guests: ${room.guests}',
                           style: const TextStyle(
@@ -153,31 +169,64 @@ class BookedScreen extends StatelessWidget {
                                 ),
                           ),
                         ),
-
                         const SizedBox(height: 10),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orange,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+
+                        // Buttons
+                        // Buttons
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.orange,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                               ),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
+                              onPressed: () {
+                                // Navigate to booking details if needed
+                              },
+                              child: const Text(
+                                'View Details',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                            onPressed: () {
-                              // Future: add booking detail page navigation
-                            },
-                            child: const Text(
-                              'View Details',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
+
+                            // Write Review (always visible, disabled until checkout)
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: isStayCompleted
+                                    ? Colors.green
+                                    : Colors.grey,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              onPressed: isStayCompleted
+                                  ? () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => AddReviewScreen(
+                                            hotelId: room.hotelUid,
+                                            hotelName: room.hotelName,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  : null, // null disables button automatically
+                              child: const Text(
+                                "Write Review",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
                       ],
                     ),
@@ -195,7 +244,42 @@ class BookedScreen extends StatelessWidget {
             return Center(child: Text('Error: ${state.error}'));
           }
 
-          return const Center(child: Text('No bookings yet.'));
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/coccon3-removebg-preview.png', // ✅ Your image path
+                  height: 150,
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  "You haven't made any bookings yet",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsGeometry.only(top: 20),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => BottomNavBar()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColor.primary,
+                      foregroundColor: AppColor.secondary
+                    ),
+                    child: Text("Make your first booking"),
+                  ),
+                ),
+              ],
+            ),
+          );
         },
       ),
     );
