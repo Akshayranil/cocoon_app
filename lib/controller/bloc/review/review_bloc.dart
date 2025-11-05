@@ -13,7 +13,9 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
   }
 
   Future<void> _onFetchReviews(
-      FetchReviews event, Emitter<ReviewState> emit) async {
+    FetchReviews event,
+    Emitter<ReviewState> emit,
+  ) async {
     try {
       emit(ReviewLoading());
 
@@ -29,7 +31,8 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
 
       final averageRating = reviews.isEmpty
           ? 0.0
-          : reviews.map((r) => r.rating).reduce((a, b) => a + b) / reviews.length;
+          : reviews.map((r) => r.rating).reduce((a, b) => a + b) /
+                reviews.length;
 
       emit(ReviewLoaded(reviews, averageRating));
     } catch (e) {
@@ -37,13 +40,38 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
     }
   }
 
-  Future<void> _onAddReview(
-      AddReview event, Emitter<ReviewState> emit) async {
+  // ✅ UPDATED METHOD - Now updates hotel rating in Firestore
+  Future<void> _onAddReview(AddReview event, Emitter<ReviewState> emit) async {
     try {
-      await firestore
+      // Add the review to hotel_reviews collection
+      await firestore.collection('hotel_reviews').add(event.review.toMap());
+
+      // ✅ NEW: Fetch all reviews for this hotel to calculate average
+      final snapshot = await firestore
           .collection('hotel_reviews')
-          .add(event.review.toMap());
-          add(FetchReviews(event.review.hotelId));
+          .where('hotelId', isEqualTo: event.review.hotelId)
+          .get();
+
+      final reviews = snapshot.docs
+          .map((doc) => HotelReviewModel.fromMap(doc.id, doc.data()))
+          .toList();
+
+      // ✅ NEW: Calculate average rating
+      final averageRating = reviews.isEmpty
+          ? 0.0
+          : reviews.map((r) => r.rating).reduce((a, b) => a + b) /
+                reviews.length;
+
+      // ✅ NEW: Update hotel document with new average rating and review count
+      await firestore
+          .collection(
+            'hotelregistration',
+          ) // ⚠️ Make sure this matches your collection name
+          .doc(event.review.hotelId)
+          .update({'rating': averageRating, 'reviewCount': reviews.length});
+
+      // Refresh the reviews to show the newly added one
+      add(FetchReviews(event.review.hotelId));
     } catch (e) {
       emit(ReviewError('Failed to add review: $e'));
     }

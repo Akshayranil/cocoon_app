@@ -50,7 +50,7 @@ class WidgetHighlyRatedHotels extends StatelessWidget {
                         imageUrl: hotel.hotelimages[0],
                         name: hotel.name,
                         location: hotel.propertyinformation,
-                        rating: hotel.rating,
+                        rating: hotel.rating.toStringAsFixed(1),
                         price: hotel.price,
                         isFavorite: isFavorite,
                         onLikeToggle: () {

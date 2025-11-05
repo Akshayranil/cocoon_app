@@ -21,8 +21,10 @@ class HotelReviewSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("User Reviews",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          const Text(
+            "User Reviews",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 10),
 
           BlocBuilder<ReviewBloc, ReviewState>(
@@ -36,18 +38,34 @@ class HotelReviewSection extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // ⭐ Average rating
-                    Row(
-                      children: [
-                        const Icon(Icons.star, color: Colors.amber, size: 24),
-                        const SizedBox(width: 4),
-                        Text(
-                          state.averageRating.toStringAsFixed(1),
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        Text(" / 5.0"),
-                      ],
-                    ),
+                    // ⭐ Average rating or first review message
+                    state.reviews.isEmpty || state.averageRating == 0
+                        ? const Text(
+                            "Be the first one to review",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          )
+                        : Row(
+                            children: [
+                              const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                                size: 24,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                state.averageRating.toStringAsFixed(1),
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const Text(" / 5.0"),
+                            ],
+                          ),
+
                     const SizedBox(height: 10),
 
                     // 🧍 List of reviews
@@ -66,8 +84,11 @@ class HotelReviewSection extends StatelessWidget {
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Icon(Icons.star,
-                                    color: Colors.amber, size: 18),
+                                const Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                  size: 18,
+                                ),
                                 Text(review.rating.toString()),
                               ],
                             ),
@@ -77,8 +98,6 @@ class HotelReviewSection extends StatelessWidget {
                     ),
 
                     const SizedBox(height: 15),
-                   
-                   
                   ],
                 );
               }
@@ -90,6 +109,3 @@ class HotelReviewSection extends StatelessWidget {
     );
   }
 }
-
-
-

@@ -17,8 +17,10 @@ class Hotel {
   final String status;
   final DateTime? createdAt;
   final List<String> hotelimages;
-  final String rating;
+  final double rating;
   final String price;
+  final int reviewCount;
+
   Hotel({
     required this.id,
     required this.type,
@@ -36,8 +38,9 @@ class Hotel {
     required this.status,
     this.createdAt,
     required this.hotelimages,
-    required this.rating,
-    required this.price
+    this.rating= 0.0,
+    required this.price,
+    this.reviewCount = 0,
   });
 
   Map<String, dynamic> toMap() => {
@@ -57,11 +60,12 @@ class Hotel {
     'status': status,
     'createdAt': createdAt,
     'hotelimages': hotelimages,
-    'rating':rating,
-    'price':price
+    'rating': rating,
+    'price': price,
+    'reviewCount':reviewCount
   };
 
-  factory Hotel.fromMap(Map<String, dynamic> map,String id) {
+  factory Hotel.fromMap(Map<String, dynamic> map, String id) {
     return Hotel(
       id: id,
       type: map['type'] ?? '',
@@ -80,52 +84,54 @@ class Hotel {
       createdAt: (map['createdAt'] is Timestamp)
           ? (map['createdAt'] as Timestamp).toDate()
           : null,
-      hotelimages: List<String>.from(map['hotelimages'] ),
-      rating: (map['rating']?? '4.5'),
-      price: (map['price']?.toString()??'1600')
+      hotelimages: List<String>.from(map['hotelimages']),
+      rating: (map['rating'] ?? 0.0).toDouble(),
+      price: (map['price']?.toString() ?? '1600'),
+      reviewCount: map['reviewCount']??0,
     );
   }
 
   Hotel copyWith({
-  String? id,
-  String? type,
-  String? name,
-  String? booking,
-  String? phonenumber,
-  String? email,
-  List<String>? facilities,
-  String? pan,
-  String? gst,
-  String? propertyinformation,
-  String? isOwnedorLeased,
-  String? haveRegistration,
-  String? document,
-  String? status,
-  DateTime? createdAt,
-  List<String>? hotelimages,
-  String? rating,
-  String? price,
-}) {
-  return Hotel(
-    id: id ?? this.id,
-    type: type ?? this.type,
-    name: name ?? this.name,
-    booking: booking ?? this.booking,
-    phonenumber: phonenumber ?? this.phonenumber,
-    email: email ?? this.email,
-    facilities: facilities ?? this.facilities,
-    pan: pan ?? this.pan,
-    gst: gst ?? this.gst,
-    propertyinformation: propertyinformation ?? this.propertyinformation,
-    isOwnedorLeased: isOwnedorLeased ?? this.isOwnedorLeased,
-    haveRegistration: haveRegistration ?? this.haveRegistration,
-    document: document ?? this.document,
-    status: status ?? this.status,
-    createdAt: createdAt ?? this.createdAt,
-    hotelimages: hotelimages ?? this.hotelimages,
-    rating: rating ?? this.rating,
-    price: price ?? this.price,
-  );
-}
-
+    String? id,
+    String? type,
+    String? name,
+    String? booking,
+    String? phonenumber,
+    String? email,
+    List<String>? facilities,
+    String? pan,
+    String? gst,
+    String? propertyinformation,
+    String? isOwnedorLeased,
+    String? haveRegistration,
+    String? document,
+    String? status,
+    DateTime? createdAt,
+    List<String>? hotelimages,
+    double? rating,
+    String? price,
+    int? reviewCount,
+  }) {
+    return Hotel(
+      id: id ?? this.id,
+      type: type ?? this.type,
+      name: name ?? this.name,
+      booking: booking ?? this.booking,
+      phonenumber: phonenumber ?? this.phonenumber,
+      email: email ?? this.email,
+      facilities: facilities ?? this.facilities,
+      pan: pan ?? this.pan,
+      gst: gst ?? this.gst,
+      propertyinformation: propertyinformation ?? this.propertyinformation,
+      isOwnedorLeased: isOwnedorLeased ?? this.isOwnedorLeased,
+      haveRegistration: haveRegistration ?? this.haveRegistration,
+      document: document ?? this.document,
+      status: status ?? this.status,
+      createdAt: createdAt ?? this.createdAt,
+      hotelimages: hotelimages ?? this.hotelimages,
+      rating: rating ?? this.rating,
+      price: price ?? this.price,
+      reviewCount: reviewCount??this.reviewCount
+    );
+  }
 }

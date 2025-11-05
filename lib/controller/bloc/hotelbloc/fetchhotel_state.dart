@@ -23,3 +23,5 @@ class HotelSelected extends HotelState {
 
   HotelSelected(this.hotel);
 }
+
+

@@ -5,6 +5,7 @@ class HotelReviewModel {
   final String userName; // Optional for displaying
   final String comment;
   final double rating;
+  
   final DateTime createdAt;
 
   HotelReviewModel({
@@ -14,6 +15,7 @@ class HotelReviewModel {
     required this.userName,
     required this.comment,
     required this.rating,
+    
     required this.createdAt,
   });
 
@@ -24,6 +26,7 @@ class HotelReviewModel {
       'userName': userName,
       'comment': comment,
       'rating': rating,
+      
       'createdAt': createdAt.toIso8601String(),
     };
   }
@@ -36,6 +39,7 @@ class HotelReviewModel {
       userName: map['userName'] ?? '',
       comment: map['comment'] ?? '',
       rating: (map['rating'] ?? 0).toDouble(),
+      
       createdAt: DateTime.parse(map['createdAt']),
     );
   }

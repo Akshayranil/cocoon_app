@@ -31,6 +31,22 @@ class FilterHotelsByResidencyType extends HotelEvent {
   FilterHotelsByResidencyType(this.residencyType);
 }
 
+class FilterHotelsByRating extends HotelEvent {
+  final double minRating;
+  FilterHotelsByRating(this.minRating);
+}
+
+class FilterHotelsByAmenities extends HotelEvent {
+  final List<String> selectedAmenities;
+  FilterHotelsByAmenities(this.selectedAmenities);
+}
+
+
+
+
+
+
+
 
 
 

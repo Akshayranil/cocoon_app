@@ -1,6 +1,7 @@
 import 'package:cocoon_app/controller/bloc/hotelbloc/fetchhotel_bloc.dart';
 import 'package:cocoon_app/controller/bloc/hotelbloc/fetchhotel_event.dart';
 import 'package:cocoon_app/model/hotelmodel.dart';
+import 'package:cocoon_app/utilities/custom_color.dart';
 import 'package:cocoon_app/view/home/hotel_detail_screen/hotel_detail_main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,8 +46,9 @@ class HotelListTile extends StatelessWidget {
                 context.read<HotelBloc>().add(SelectHotel(hotel));
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HotelDetailScreen(hotelId: hotel.id,)),
-                  
+                  MaterialPageRoute(
+                    builder: (context) => HotelDetailScreen(hotelId: hotel.id),
+                  ),
                 );
                 // context.read<HotelBloc>().add(FetchHotels());
               },
@@ -90,10 +92,12 @@ class HotelListTile extends StatelessWidget {
                       const Icon(Icons.star, color: Colors.amber, size: 16),
                       const SizedBox(width: 4),
                       Text(
-                        rating.toString(),
-                        style: const TextStyle(fontSize: 13),
+                        (hotel.reviewCount == 0)
+                            ? "New"
+                            : hotel.rating.toStringAsFixed(1),
+                        style: const TextStyle(color: AppColor.ternary),
                       ),
-                      const SizedBox(width: 12),
+                      const SizedBox(width: 60),
                       Text(
                         '₹${price.toString()}',
                         style: const TextStyle(fontWeight: FontWeight.w600),

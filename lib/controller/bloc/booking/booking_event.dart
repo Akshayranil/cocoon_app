@@ -18,3 +18,4 @@ class FetchUserBookings extends BookingEvent {
   FetchUserBookings(this.userId);
 }
 
+ 

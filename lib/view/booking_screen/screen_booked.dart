@@ -42,7 +42,7 @@ class BookedScreen extends StatelessWidget {
                 final room = bookings[index];
 
                 // ✅ Parse custom date format dd/MM/yyyy
-                final parts = room.checkOutDate.split('/'); // ["6","11","2025"]
+                final parts = room.checkInDate.split('/'); // ["6","11","2025"]
                 final checkoutDate = DateTime(
                   int.parse(parts[2]), // year
                   int.parse(parts[1]), // month

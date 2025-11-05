@@ -21,7 +21,7 @@ class WidgetHotelNearYou extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -68,12 +68,14 @@ class WidgetHotelNearYou extends StatelessWidget {
                             // Image
                             GestureDetector(
                               onTap: () {
-                                context.read<HotelBloc>().add(SelectHotel(hotel));
+                                context.read<HotelBloc>().add(
+                                  SelectHotel(hotel),
+                                );
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => HotelDetailScreen(hotelId: hotel.id,),
-                                    
+                                    builder: (context) =>
+                                        HotelDetailScreen(hotelId: hotel.id),
                                   ),
                                 );
                               },
@@ -121,8 +123,9 @@ class WidgetHotelNearYou extends StatelessWidget {
                                       favoriteHotels = favState.favoriteHotels;
                                     }
 
-                                    final isFavorite = favoriteHotels.any((fav) => fav.id == hotel.id);
-
+                                    final isFavorite = favoriteHotels.any(
+                                      (fav) => fav.id == hotel.id,
+                                    );
 
                                     return GestureDetector(
                                       onTap: () {
@@ -176,7 +179,8 @@ class WidgetHotelNearYou extends StatelessWidget {
                                   padding: const EdgeInsets.all(12.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         hotel.name,
@@ -199,7 +203,8 @@ class WidgetHotelNearYou extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            hotel.price,
+                                            "₹${hotel.price}"
+,
                                             style: const TextStyle(
                                               color: Colors.white,
                                             ),
@@ -213,8 +218,10 @@ class WidgetHotelNearYou extends StatelessWidget {
                                               ),
                                               const SizedBox(width: 4),
                                               Text(
-                                                hotel.rating.toString(),
-                                                
+                                                (hotel.reviewCount == 0)
+                                                    ? "New"
+                                                    : hotel.rating
+                                                          .toStringAsFixed(1),
                                                 style: const TextStyle(
                                                   color: Colors.white,
                                                 ),
