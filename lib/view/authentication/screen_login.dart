@@ -1,16 +1,13 @@
 import 'package:cocoon_app/controller/bloc/auth/auth_bloc.dart';
 import 'package:cocoon_app/utilities/custom_color.dart';
-import 'package:cocoon_app/utilities/custom_navbar.dart';
-import 'package:cocoon_app/utilities/forgot_password.dart';
-import 'package:cocoon_app/view/home/home_screen/screen_home_main.dart';
+import 'package:cocoon_app/view/authentication/email_field.dart';
+import 'package:cocoon_app/view/authentication/google_authentication.dart';
+import 'package:cocoon_app/view/authentication/password_field.dart';
+import 'package:cocoon_app/view/authentication/reset_field.dart';
 import 'package:cocoon_app/view/authentication/screen_signup.dart';
 import 'package:cocoon_app/view/profile_setup/screen_profile_set_up.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sign_in_button/sign_in_button.dart';
-
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
   final TextEditingController emailcontroller = TextEditingController();
@@ -58,124 +55,16 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 55),
-                    child: TextField(
-                      controller: emailcontroller,
-                      decoration: InputDecoration(
-                        labelText: 'Email',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(
-                            color: AppColor.primary,
-                            width: 1.5,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                      ),
-                    ),
-                  ),
+                  EmailLoginScreen(),
                   SizedBox(height: 30),
                   
-                 StatefulBuilder(
-  builder: (context, setState) {
-    
-
-    return TextField(
-      controller: passwordcontroller,
-      obscureText: obscureText,
-      decoration: InputDecoration(
-        labelText: 'Password',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: AppColor.primary,
-            width: 1.5,
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.grey),
-        ),
-        suffixIcon: IconButton(
-          icon: Icon(
-            obscureText ? Icons.visibility_off : Icons.visibility,
-            color: Colors.grey,
-          ),
-          onPressed: () {
-            setState(() {
-              obscureText = !obscureText;
-            });
-          },
-        ),
-      ),
-    );
-  },
-),
+                PasswordLoginField(),
 
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      TextButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              final TextEditingController emailcontroller =
-                                  TextEditingController();
-                              return AlertDialog(
-                                title: Text(
-                                  'Reset Password',
-                                  style: TextStyle(
-                                    color: AppColor.ternary,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                content: TextField(
-                                  controller: emailcontroller,
-                                  decoration: InputDecoration(
-                                    hintText: 'Enter your email',
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                ),
-                                actions: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      resetPassword(
-                                        context,
-                                        emailcontroller.text.trim(),
-                                      );
-                                      Navigator.of(context).pop();
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppColor.primary,
-                                    ),
-                                    child: Text(
-                                      'Sent',
-                                      style: TextStyle(
-                                        color: AppColor.secondary,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        child: Text('Forgot Password?'),
-                      ),
+                     ResetPasswordField()
                     ],
                   ),
 
@@ -258,29 +147,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
 
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    // ignore: sized_box_for_whitespace
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.95,
-                      height: MediaQuery.of(context).size.width * 0.14,
-                      child: SignInButton(
-                        Buttons.google,
-                        onPressed: () async {
-                          bool isLoged = await login();
-
-                          if (isLoged) {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ProfileSetupScreen(),
-                              ),
-                            );
-                          }
-                        },
-                      ),
-                    ),
-                  ),
+                  GoogleAuthentication()
                 ],
               ),
             ),
@@ -302,14 +169,5 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Future<bool> login() async {
-    final user = await GoogleSignIn().signIn();
-    GoogleSignInAuthentication userAuth = await user!.authentication;
-    var credential = GoogleAuthProvider.credential(
-      idToken: userAuth.idToken,
-      accessToken: userAuth.accessToken,
-    );
-    await FirebaseAuth.instance.signInWithCredential(credential);
-    return FirebaseAuth.instance.currentUser != null;
-  }
+
 }

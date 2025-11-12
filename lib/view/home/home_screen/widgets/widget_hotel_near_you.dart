@@ -48,6 +48,28 @@ class WidgetHotelNearYou extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             } else if (state is HotelLoaded) {
               final hotels = state.hotels;
+              if (hotels.isEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/notfound-removebg-preview.png', // your placeholder image
+                        height: 150,
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        "No data available at the moment",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
 
               return SizedBox(
                 height: 260,
@@ -203,8 +225,7 @@ class WidgetHotelNearYou extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            "₹${hotel.price}"
-,
+                                            "₹${hotel.price}",
                                             style: const TextStyle(
                                               color: Colors.white,
                                             ),

@@ -1,7 +1,9 @@
 import 'package:cocoon_app/controller/bloc/booking/booking_bloc.dart';
 import 'package:cocoon_app/controller/bloc/booking/booking_state.dart';
 import 'package:cocoon_app/utilities/custom_color.dart';
+import 'package:cocoon_app/utilities/custom_date.dart';
 import 'package:cocoon_app/utilities/custom_navbar.dart';
+import 'package:cocoon_app/view/booking_screen/booked_detail_screen.dart';
 import 'package:cocoon_app/view/booking_screen/screen_add_review.dart';
 import 'package:cocoon_app/view/home/home_screen/screen_home_main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -119,7 +121,7 @@ class BookedScreen extends StatelessWidget {
                                     color: Colors.black54,
                                   ),
                                 ),
-                                Text(room.checkInDate),
+                                Text(formatDate(room.checkInDate)),
                               ],
                             ),
                             Column(
@@ -132,7 +134,7 @@ class BookedScreen extends StatelessWidget {
                                     color: Colors.black54,
                                   ),
                                 ),
-                                Text(room.checkOutDate),
+                                Text(formatDate(room.checkOutDate)),
                               ],
                             ),
                           ],
@@ -184,7 +186,13 @@ class BookedScreen extends StatelessWidget {
                                 ),
                               ),
                               onPressed: () {
-                                // Navigate to booking details if needed
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) =>
+                                        BookingDetailsScreen(room: room),
+                                  ),
+                                );
                               },
                               child: const Text(
                                 'View Details',
@@ -272,7 +280,7 @@ class BookedScreen extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColor.primary,
-                      foregroundColor: AppColor.secondary
+                      foregroundColor: AppColor.secondary,
                     ),
                     child: Text("Make your first booking"),
                   ),

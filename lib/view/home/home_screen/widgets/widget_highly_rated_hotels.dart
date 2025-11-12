@@ -12,7 +12,7 @@ class WidgetHighlyRatedHotels extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<FavoritesBloc>().add(LoadFavorites()); 
+    context.read<FavoritesBloc>().add(LoadFavorites());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -28,7 +28,28 @@ class WidgetHighlyRatedHotels extends StatelessWidget {
           builder: (context, state) {
             if (state is HotelLoaded) {
               final hotels = state.hotels;
-
+              if (hotels.isEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/notfound-removebg-preview.png', // your placeholder image
+                        height: 150,
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        "No data available at the moment",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
               // Wrap list in FavoritesBloc builder so icon updates when state changes
               return BlocBuilder<FavoritesBloc, FavoritesState>(
                 builder: (context, favState) {
@@ -43,7 +64,9 @@ class WidgetHighlyRatedHotels extends StatelessWidget {
                     itemCount: hotels.length,
                     itemBuilder: (context, index) {
                       final hotel = hotels[index];
-                      final isFavorite = favoriteHotels.any((fav) => fav.id == hotel.id);
+                      final isFavorite = favoriteHotels.any(
+                        (fav) => fav.id == hotel.id,
+                      );
 
                       return HotelListTile(
                         hotel: hotel,
@@ -56,21 +79,25 @@ class WidgetHighlyRatedHotels extends StatelessWidget {
                         onLikeToggle: () {
                           if (isFavorite) {
                             context.read<FavoritesBloc>().add(
-                                  RemoveFromFavorites(hotel),
-                                );
+                              RemoveFromFavorites(hotel),
+                            );
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                  content: Text(
-                                      '${hotel.name} removed from favorites')),
+                                content: Text(
+                                  '${hotel.name} removed from favorites',
+                                ),
+                              ),
                             );
                           } else {
                             context.read<FavoritesBloc>().add(
-                                  AddToFavorites(hotel),
-                                );
+                              AddToFavorites(hotel),
+                            );
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                  content: Text(
-                                      '${hotel.name} added to favorites')),
+                                content: Text(
+                                  '${hotel.name} added to favorites',
+                                ),
+                              ),
                             );
                           }
                         },

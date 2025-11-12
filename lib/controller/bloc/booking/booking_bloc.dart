@@ -49,6 +49,51 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     emit(BookingError('Failed to load bookings: $e'));
   }
 });
+
+on<CancelBooking>((event, emit) async {
+  emit(BookingLoading());
+  
+  try {
+    // Delete booking
+    await FirebaseFirestore.instance
+        .collection('userBookings')
+        .doc(event.userId)
+        .collection('bookings')
+        .doc(event.bookingId)
+        .delete();
+
+    // ✅ Refresh after deletion and wait for loading to finish
+    final snapshot = await FirebaseFirestore.instance
+        .collection('userBookings')
+        .doc(event.userId)
+        .collection('bookings')
+        .get();
+
+    final List<BookedRoom> fetchedBookings = snapshot.docs.map((doc) {
+      final data = doc.data();
+      return BookedRoom(
+        userId: data['userId'] ?? '',
+        id: doc.id,
+        hotelName: data['hotelName'],
+        location: data['location'],
+        price: (data['price'] ?? 0).toDouble(),
+        imageUrl: data['imageUrl'],
+        checkInDate: data['checkInDate'],
+        checkOutDate: data['checkOutDate'],
+        guests: data['guests'],
+        hotelUid: data['hotelUid'],
+      );
+    }).toList();
+
+    emit(BookingLoaded(fetchedBookings)); // ✅ safe update
+
+  } catch (e) {
+    emit(BookingError('Failed to cancel booking: $e'));
+  }
+});
+
+
+
   }
 
   

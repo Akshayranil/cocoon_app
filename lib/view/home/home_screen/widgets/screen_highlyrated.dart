@@ -76,16 +76,37 @@ class HotelListTile extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                
                 children: [
-                  Text(
-                    name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          
+                          Text(
+                            name,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          SizedBox(height: 5,),
+                          Text(location, style: const TextStyle(fontSize: 13,)),
+                        ],
+                      ),
+                      IconButton(
+              icon: Icon(
+                isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: isFavorite ? Colors.green : Colors.grey,
+              ),
+              onPressed: onLikeToggle,
+            ),
+                    ],
                   ),
-                  const SizedBox(height: 4),
-                  Text(location, style: const TextStyle(fontSize: 13)),
+                 
+                  
                   const Spacer(),
                   Row(
                     children: [
@@ -97,7 +118,7 @@ class HotelListTile extends StatelessWidget {
                             : hotel.rating.toStringAsFixed(1),
                         style: const TextStyle(color: AppColor.ternary),
                       ),
-                      const SizedBox(width: 60),
+                      const Spacer(),
                       Text(
                         '₹${price.toString()}',
                         style: const TextStyle(fontWeight: FontWeight.w600),
@@ -108,13 +129,7 @@ class HotelListTile extends StatelessWidget {
               ),
             ),
 
-            IconButton(
-              icon: Icon(
-                isFavorite ? Icons.favorite : Icons.favorite_border,
-                color: isFavorite ? Colors.green : Colors.grey,
-              ),
-              onPressed: onLikeToggle,
-            ),
+            
           ],
         ),
       ),
