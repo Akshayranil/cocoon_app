@@ -41,6 +41,8 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         checkOutDate: data['checkOutDate'],
         guests: data['guests'],
         hotelUid: data['hotelUid'],
+        userName: data['userName'],
+        userPhone: data['userPhone']
       );
     }).toList();
 
@@ -82,6 +84,8 @@ on<CancelBooking>((event, emit) async {
         checkOutDate: data['checkOutDate'],
         guests: data['guests'],
         hotelUid: data['hotelUid'],
+        userName: data['userName'],
+        userPhone: data['userPhone']
       );
     }).toList();
 

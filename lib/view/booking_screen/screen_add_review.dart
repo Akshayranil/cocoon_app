@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cocoon_app/controller/bloc/review/review_bloc.dart';
 import 'package:cocoon_app/controller/bloc/review/review_event.dart';
 import 'package:cocoon_app/model/review_model.dart';
@@ -101,7 +102,7 @@ class AddReviewScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (ratingNotifier.value == 0) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
@@ -111,12 +112,23 @@ class AddReviewScreen extends StatelessWidget {
                         return;
                       }
 
+                       final user = FirebaseAuth.instance.currentUser!;
+  
+  // ✅ Fetch profile details from Firestore
+  final userDoc = await FirebaseFirestore.instance
+      .collection('users')
+      .doc(user.uid)
+      .get();
+
+  final guestName = userDoc.data()?['name'] ?? "Guest";
+
                       context.read<ReviewBloc>().add(AddReview(
                         HotelReviewModel(
                           id: '',
                           hotelId: hotelId,
                           userId: user.uid,
                           userName: user.displayName ?? "Guest",
+                          guestName: guestName ?? "Guest",
                           comment: _controller.text.trim(),
                           rating: ratingNotifier.value,
                           createdAt: DateTime.now(),

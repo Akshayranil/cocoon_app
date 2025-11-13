@@ -9,6 +9,8 @@ class BookedRoom {
   final String checkOutDate;
   final int guests;
   final String userId;
+  final String? userName;
+  final String? userPhone;
   BookedRoom({
     required this.id,
     required this.hotelUid,
@@ -20,6 +22,8 @@ class BookedRoom {
     required this.checkOutDate,
     required this.guests,
     required this.userId,
+     this.userName,
+     this.userPhone
   });
 
   // factory BookedRoom.fromMap(Map<String, dynamic> data) {

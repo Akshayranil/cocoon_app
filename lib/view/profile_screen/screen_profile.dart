@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:cocoon_app/controller/bloc/profile/profile_bloc.dart';
 import 'package:cocoon_app/utilities/custom_color.dart';
+import 'package:cocoon_app/view/authentication/screen_login.dart';
 import 'package:cocoon_app/view/onboarding_screen/screen_splash.dart';
 import 'package:cocoon_app/view/profile_screen/screen_help_support.dart';
 import 'package:cocoon_app/view/profile_screen/screen_privacy_policy.dart';
@@ -184,7 +185,7 @@ class ProfileScreen extends StatelessWidget {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => SplashScreen(),
+                              builder: (context) => LoginScreen(),
                             ),
                           );
                         }

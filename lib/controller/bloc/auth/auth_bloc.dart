@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
@@ -17,11 +18,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> onlogin(AuthLogin event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
-      await auth.signInWithEmailAndPassword(
-        email: event.email,
-        password: event.password,
-      );
-      emit(AuthSuccess());
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+  email: event.email,
+  password: event.password,
+);
+emit(AuthSuccess(userCredential.user!)); // pass logged-in user
+
     } on FirebaseAuthException catch (e) {
       emit(AuthFailure(e.message ?? 'Login Failed'));
     }
@@ -44,4 +46,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     await auth.signOut();
     emit(AuthInitial());
   }
+}
+
+
+
+Future<bool> hasProfileData(String uid) async {
+  final doc = await FirebaseFirestore.instance
+      .collection('users') // or the collection where you store profile
+      .doc(uid)
+      .get();
+  return doc.exists;
 }

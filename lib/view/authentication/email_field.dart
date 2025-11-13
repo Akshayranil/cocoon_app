@@ -2,8 +2,8 @@ import 'package:cocoon_app/utilities/custom_color.dart';
 import 'package:flutter/material.dart';
 
 class EmailLoginScreen extends StatelessWidget {
-  final TextEditingController emailcontroller = TextEditingController();
-   EmailLoginScreen({super.key});
+  final TextEditingController emailcontroller;
+  const EmailLoginScreen({super.key,required this.emailcontroller});
 
   @override
   Widget build(BuildContext context) {

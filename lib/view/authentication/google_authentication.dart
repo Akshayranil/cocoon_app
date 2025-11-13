@@ -1,3 +1,6 @@
+import 'package:cocoon_app/controller/bloc/auth/auth_bloc.dart';
+import 'package:cocoon_app/utilities/custom_navbar.dart';
+import 'package:cocoon_app/view/home/home_screen/screen_home_main.dart';
 import 'package:cocoon_app/view/profile_setup/screen_profile_set_up.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -32,11 +35,22 @@ class GoogleAuthentication extends StatelessWidget {
             bool isLoged = await login();
 
             if (isLoged) {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => ProfileSetupScreen()),
-              );
-            }
+  final user = FirebaseAuth.instance.currentUser!;
+  bool profileExists = await hasProfileData(user.uid);
+
+  if (profileExists) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => BottomNavBar()),
+    );
+  } else {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => ProfileSetupScreen()),
+    );
+  }
+}
+
           },
         ),
       ),

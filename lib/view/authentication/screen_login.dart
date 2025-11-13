@@ -1,10 +1,12 @@
 import 'package:cocoon_app/controller/bloc/auth/auth_bloc.dart';
 import 'package:cocoon_app/utilities/custom_color.dart';
+import 'package:cocoon_app/utilities/custom_navbar.dart';
 import 'package:cocoon_app/view/authentication/email_field.dart';
 import 'package:cocoon_app/view/authentication/google_authentication.dart';
 import 'package:cocoon_app/view/authentication/password_field.dart';
 import 'package:cocoon_app/view/authentication/reset_field.dart';
 import 'package:cocoon_app/view/authentication/screen_signup.dart';
+import 'package:cocoon_app/view/home/home_screen/screen_home_main.dart';
 import 'package:cocoon_app/view/profile_setup/screen_profile_set_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,10 +57,10 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  EmailLoginScreen(),
+                  EmailLoginScreen(emailcontroller: emailcontroller,),
                   SizedBox(height: 30),
                   
-                PasswordLoginField(),
+                PasswordLoginField(passwordcontroller: passwordcontroller,),
 
 
                   Row(
@@ -153,18 +155,31 @@ class LoginScreen extends StatelessWidget {
             ),
           );
         },
-        listener: (context, state) {
-          if (state is AuthSuccess) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ProfileSetupScreen()),
-            );
-          } else if (state is AuthFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Incorrect Email or Password')),
-            );
-          }
-        },
+        listener: (context, state) async {
+  if (state is AuthSuccess) {
+    final user = state.user;
+    bool profileExists = await hasProfileData(user.uid);
+
+    if (profileExists) {
+      // Already setup → go to HomeScreen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => BottomNavBar()),
+      );
+    } else {
+      // First time → go to ProfileSetup
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => ProfileSetupScreen()),
+      );
+    }
+  } else if (state is AuthFailure) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(state.error)),
+    );
+  }
+}
+
       ),
     );
   }

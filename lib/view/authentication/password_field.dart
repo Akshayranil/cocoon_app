@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class PasswordLoginField extends StatelessWidget {
-   final TextEditingController passwordcontroller = TextEditingController();
+  final TextEditingController passwordcontroller;
   bool obscureText = true;
-   PasswordLoginField({super.key});
+  PasswordLoginField({super.key,required this.passwordcontroller});
 
   @override
   Widget build(BuildContext context) {

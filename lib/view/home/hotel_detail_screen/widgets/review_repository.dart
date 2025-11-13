@@ -79,7 +79,7 @@ class HotelReviewSection extends StatelessWidget {
                           margin: const EdgeInsets.symmetric(vertical: 6),
                           child: ListTile(
                             leading: const Icon(Icons.person),
-                            title: Text(review.userName),
+                            title: Text(review.guestName??'No user'),
                             subtitle: Text(review.comment),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
