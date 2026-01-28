@@ -6,6 +6,7 @@ import 'package:cocoon_app/view/onboarding_screen/screen_splash.dart';
 import 'package:cocoon_app/view/profile_screen/screen_help_support.dart';
 import 'package:cocoon_app/view/profile_screen/screen_privacy_policy.dart';
 import 'package:cocoon_app/view/profile_screen/screen_terms_conditions.dart';
+import 'package:cocoon_app/view/profile_setup/screen_profile_set_up.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -113,8 +114,19 @@ class ProfileScreen extends StatelessWidget {
                       title: const Text('Edit Profile'),
                       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                       onTap: () {
-                        // Navigate to Edit Profile later
-                      },
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => ProfileSetupScreen(
+        name: name,
+        phone: phone,
+        imageUrl: imageUrl,
+        
+      ),
+    ),
+  );
+},
+
                     ),
                     const Divider(thickness: 1.2),
                     ListTile(

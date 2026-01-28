@@ -175,7 +175,7 @@ class LoginScreen extends StatelessWidget {
     }
   } else if (state is AuthFailure) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(state.error)),
+      SnackBar(content: Text("You haven't created an account yet")),
     );
   }
 }

@@ -59,7 +59,12 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.14.4"
 
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/cocoonicon.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
@@ -78,6 +83,7 @@ flutter:
     - assets/resort.jpg
     - assets/coccon3-removebg-preview.png
     - assets/notfound-removebg-preview.png
+    - assets/cocoonicon.png
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

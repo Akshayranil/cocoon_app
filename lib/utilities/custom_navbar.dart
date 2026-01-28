@@ -27,7 +27,7 @@ class BottomNavBar extends StatelessWidget {
             ],
             indicatorColor: Colors.transparent,
             labelColor: AppColor.secondary,
-            unselectedLabelColor: Colors.grey,
+            unselectedLabelColor: Colors.white70,
           ),
         ),
         body: TabBarView(

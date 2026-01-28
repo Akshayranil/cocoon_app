@@ -3,11 +3,22 @@ import 'package:cocoon_app/controller/bloc/profile/profile_bloc.dart';
 import 'package:cocoon_app/utilities/custom_color.dart';
 import 'package:cocoon_app/utilities/custom_navbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileSetupScreen extends StatelessWidget {
-  ProfileSetupScreen({super.key});
+  final String? name;
+  final String? phone;
+  final String? imageUrl;
+  
+  ProfileSetupScreen({
+    super.key,
+    this.imageUrl,
+    this.name,
+    this.phone,
+    
+  });
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
@@ -22,6 +33,8 @@ class ProfileSetupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    nameController.text = name ?? "";
+    phoneController.text = phone ?? "";
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -72,6 +85,7 @@ class ProfileSetupScreen extends StatelessWidget {
                     backgroundImage: selectedImage != null
                         ? FileImage(selectedImage)
                         : null,
+
                     child: selectedImage == null
                         ? const Icon(
                             Icons.camera_alt,
@@ -104,6 +118,10 @@ class ProfileSetupScreen extends StatelessWidget {
                 TextField(
                   controller: phoneController,
                   keyboardType: TextInputType.phone,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(10),
+                  ],
                   decoration: InputDecoration(
                     labelText: "Phone Number",
                     border: OutlineInputBorder(
