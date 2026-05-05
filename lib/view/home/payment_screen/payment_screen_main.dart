@@ -153,7 +153,7 @@ class PaymentScreen extends StatelessWidget {
                     onPressed: () {
                       context.read<PaymentBloc>().add(
                         StartPayment(
-                          apiKey: 'rzp_test_RSzOHF1z22r8ph',
+                          apiKey: 'rzp_test_7JLPi5q56mAlpG',
                           amount: amount,
                           name: 'Cocoon Hotel',
                           description: 'Hotel Booking Payment',
